@@ -43,7 +43,7 @@ if not ret:
     raise RuntimeError("Failed to read the last frame from the video")
 
 # save the last frame to the intermidiate result directory
-image_path = os.path.join(intermidiate_result_dir, "image.jpg")
+image_path = os.path.join(intermidiate_result_dir, "image.png")
 cv2.imwrite(image_path, frame)
 
 
@@ -69,10 +69,19 @@ processor = Sam3Processor(model, confidence_threshold=0.5)
 inference_state = processor.set_image(image)
 
 processor.reset_all_prompts(inference_state)
-inference_state = processor.set_text_prompt(state=inference_state, prompt="piano")
+inference_state = processor.set_text_prompt(state=inference_state, prompt="keyboard")
 
 img0 = Image.open(image_path)
 plot_results(img0, inference_state)
+result_path = os.path.join(intermidiate_result_dir, "keyboard.png")
+fig = plt.gcf()
+ax = fig.gca()
+ax.axis("off")
+ax.set_position([0, 0, 1, 1])
+save_dpi = width / fig.get_size_inches()[0]
+fig.set_size_inches(width / save_dpi, height / save_dpi)
+plt.savefig(result_path, dpi=save_dpi, pad_inches=0)
+plt.close()
 
 
 
