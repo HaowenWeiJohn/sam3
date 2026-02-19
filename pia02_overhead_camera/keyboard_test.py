@@ -46,7 +46,7 @@ inference_state = processor.set_image(image)
 
 
 processor.reset_all_prompts(inference_state)
-inference_state = processor.set_text_prompt(state=inference_state, prompt="keyboard")
+inference_state = processor.set_text_prompt(state=inference_state, prompt="shoe")
 
 img0 = Image.open(image_path)
 plot_results(img0, inference_state)
