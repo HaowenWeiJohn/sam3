@@ -47,9 +47,6 @@ image_path = os.path.join(intermidiate_result_dir, "image.png")
 cv2.imwrite(image_path, frame)
 
 
-
-
-
 # turn on tfloat32 for Ampere GPUs
 # https://pytorch.org/docs/stable/notes/cuda.html#tensorfloat-32-tf32-on-ampere-devices
 torch.backends.cuda.matmul.allow_tf32 = True
@@ -68,12 +65,14 @@ width, height = image.size
 processor = Sam3Processor(model, confidence_threshold=0.5)
 inference_state = processor.set_image(image)
 
+
+target = "keyboard"
 processor.reset_all_prompts(inference_state)
-inference_state = processor.set_text_prompt(state=inference_state, prompt="keyboard")
+inference_state = processor.set_text_prompt(state=inference_state, prompt=target)
 
 img0 = Image.open(image_path)
 plot_results(img0, inference_state)
-result_path = os.path.join(intermidiate_result_dir, "keyboard.png")
+result_path = os.path.join(intermidiate_result_dir, f"{target}.png")
 fig = plt.gcf()
 ax = fig.gca()
 ax.axis("off")
@@ -82,6 +81,21 @@ save_dpi = width / fig.get_size_inches()[0]
 fig.set_size_inches(width / save_dpi, height / save_dpi)
 plt.savefig(result_path, dpi=save_dpi, pad_inches=0)
 plt.close()
+
+# # save masks logits as heatmap
+# fig, ax = plt.subplots()
+# ax.imshow(inference_state["masks_logits"][0, 0].cpu().numpy())
+# ax.axis("off")
+# ax.set_position([0, 0, 1, 1])
+# save_dpi = width / fig.get_size_inches()[0]
+# fig.set_size_inches(width / save_dpi, height / save_dpi)
+# heatmap_path = os.path.join(intermidiate_result_dir, f"{target}_heatmap.png")
+# plt.savefig(heatmap_path, dpi=save_dpi, pad_inches=0)
+# plt.close()
+
+
+
+
 
 
 
