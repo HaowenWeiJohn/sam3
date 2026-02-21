@@ -1,7 +1,14 @@
 {
   "permissions": {
     "allow": [
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "WebSearch",
+      "Bash(grep:*)",
+      "WebFetch(domain:pycad.co)",
+      "WebFetch(domain:khanhha.github.io)",
+      "WebFetch(domain:pyimagesearch.com)",
+      "WebFetch(domain:scikit-image.org)",
+      "Bash(python:*)"
     ]
   }
 }
