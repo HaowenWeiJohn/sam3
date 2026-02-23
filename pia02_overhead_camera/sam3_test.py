@@ -12,7 +12,11 @@ from sam3.visualization_utils import draw_box_on_image, normalize_bbox, plot_res
 
 import torch
 
-image_path = r"\\192.168.1.104\home\piano\data\overhead_camera_images\last_frames\012-10-fx30_2_0033.png"
+# image_path = r"\\192.168.1.104\home\piano\data\overhead_camera_images\last_frames\012-10-fx30_2_0033.png"
+image_path = r'C:\Users\mitim\Desktop\MITHIC\code\sam3\pia02_overhead_camera\image.jpg'
+# check if the image path exists
+if not os.path.exists(image_path):
+    raise FileNotFoundError(f"Image file not found: {image_path}")
 image = Image.open(image_path)
 # showw the image
 

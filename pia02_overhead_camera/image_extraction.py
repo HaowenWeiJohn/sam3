@@ -7,8 +7,10 @@ import cv2
 participant_root_dir = r"\\192.168.1.104\home\piano\data"
 participant_root_dir = Path(participant_root_dir)
 
-image_save_dir = r"\\192.168.1.104\home\piano\data\overhead_camera_images\last_frames"
-os.makedirs(image_save_dir, exist_ok=True)
+image_save_dir = r"\\192.168.1.104\home\piano\data\overhead_camera\last_frames"
+# check if the dir exists, if not, break
+if not os.path.exists(image_save_dir):
+    raise FileNotFoundError(f"Image save directory not found: {image_save_dir}")
 
 participant_folders = sorted(
     [p for p in participant_root_dir.iterdir() if p.is_dir() and p.name.isdigit()],
@@ -39,7 +41,7 @@ for participant_folder in participant_folders:
                 cap.release()
                 continue
 
-            cap.set(cv2.CAP_PROP_POS_FRAMES, frame_count - 1)
+            cap.set(cv2.CAP_PROP_POS_FRAMES, frame_count - 10)
             ret, frame = cap.read()
             cap.release()
 
